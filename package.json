@@ -1,0 +1,15 @@
+{
+  "name": "article-processor",
+  "version": "1.0.0",
+  "description": "FIFO Article processor with RabbitMQ and MongoDB",
+  "main": "producer.js",
+  "scripts": {
+    "producer": "node producer.js",
+    "consumer": "node consumer.js",
+    "verify": "node verify-mongodb.js"
+  },
+  "dependencies": {
+    "amqplib": "^0.10.3",
+    "mongoose": "^8.0.0"
+  }
+}
