@@ -1,6 +1,6 @@
- 📰 Article Processing System
+ 📰 ArticleFlow Pro
 
-A simple yet powerful FIFO (First In, First Out) article processing system that reads JSON articles, queues them through RabbitMQ, and stores them in MongoDB. Built with love using Node.js for developers who need reliable article data processing[1][2].
+A simple yet powerful FIFO (First In, First Out) article processing system that reads JSON articles, queues them through RabbitMQ, and stores them in MongoDB. Built with love using Node.js for developers who need reliable article data processing.
 
  What This Does:
 
