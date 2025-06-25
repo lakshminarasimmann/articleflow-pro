@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - ArticleFlow Pro</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="/" class="nav-logo">
+                    <i class="fas fa-stream"></i>
+                    <span>ArticleFlow Pro</span>
+                </a>
+                <div class="nav-breadcrumb">
+                    <span>Dashboard</span>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="nav-status">
+                    <div class="status-item" id="mongoStatus">
+                        <i class="fas fa-database"></i>
+                        <span>MongoDB</span>
+                        <div class="status-dot offline"></div>
+                    </div>
+                    <div class="status-item" id="rabbitStatus">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>RabbitMQ</span>
+                        <div class="status-dot offline"></div>
+                    </div>
+                    <div class="status-item" id="socketStatus">
+                        <i class="fas fa-plug"></i>
+                        <span>Socket</span>
+                        <div class="status-dot offline"></div>
+                    </div>
+                </div>
+                <a href="/" class="btn btn-secondary btn-sm">
+                    <i class="fas fa-home"></i>
+                    Home
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-content">
+                <div class="sidebar-section">
+                    <h3>Overview</h3>
+                    <a href="#stats" class="sidebar-link active">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Statistics</span>
+                    </a>
+                    <a href="#processing" class="sidebar-link">
+                        <i class="fas fa-cogs"></i>
+                        <span>Processing</span>
+                    </a>
+                    <a href="#activity" class="sidebar-link">
+                        <i class="fas fa-stream"></i>
+                        <span>Activity Feed</span>
+                    </a>
+                </div>
+                <div class="sidebar-section">
+                    <h3>Management</h3>
+                    <a href="#articles" class="sidebar-link">
+                        <i class="fas fa-newspaper"></i>
+                        <span>Articles</span>
+                    </a>
+                    <a href="#queue" class="sidebar-link">
+                        <i class="fas fa-list"></i>
+                        <span>Queue Monitor</span>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Stats Cards -->
+            <section class="stats-section" id="stats">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-pie"></i> System Overview</h2>
+                    <div class="header-actions">
+                        <button class="btn btn-secondary btn-sm" onclick="updateStats()">
+                            <i class="fas fa-sync-alt"></i>
+                            Refresh
+                        </button>
+                    </div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card primary">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="stat-trend">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+12%</span>
+                            </div>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalArticles">0</h3>
+                            <p>Total Articles</p>
+                            <div class="stat-progress">
+                                <div class="progress-bar" style="width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card success">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-trend">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+8%</span>
+                            </div>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="storylineArticles">0</h3>
+                            <p>Storyline Articles</p>
+                            <div class="stat-progress">
+                                <div class="progress-bar" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-trend">
+                                <i class="fas fa-arrow-down"></i>
+                                <span>-3%</span>
+                            </div>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="queuedMessages">0</h3>
+                            <p>Queued Messages</p>
+                            <div class="stat-progress">
+                                <div class="progress-bar" style="width: 25%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card info">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-trend">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+5%</span>
+                            </div>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="activeConsumers">0</h3>
+                            <p>Active Consumers</p>
+                            <div class="stat-progress">
+                                <div class="progress-bar" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Processing Section -->
+            <section class="processing-section" id="processing">
+                <div class="section-header">
+                    <h2><i class="fas fa-cogs"></i> Article Processing</h2>
+                </div>
+                
+                <div class="processing-tabs">
+                    <button class="tab-btn active" onclick="switchTab('manual')">
+                        <i class="fas fa-edit"></i>
+                        Manual Entry
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('upload')">
+                        <i class="fas fa-upload"></i>
+                        File Upload
+                    </button>
+                </div>
+
+                <!-- Manual Entry Tab -->
+                <div id="manualTab" class="tab-content active">
+                    <div class="form-container">
+                        <form id="articleForm" class="article-form">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="articleId">Article ID *</label>
+                                    <input type="number" id="articleId" name="id" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="articleType">Type *</label>
+                                    <select id="articleType" name="type" required>
+                                        <option value="storyline">Storyline</option>
+                                        <option value="news">News</option>
+                                        <option value="feature">Feature</option>
+                                    </select>
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="articleTitle">Title *</label>
+                                    <input type="text" id="articleTitle" name="title" required>
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="articleUrl">URL</label>
+                                    <input type="url" id="articleUrl" name="url">
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="leadText">Lead Text</label>
+                                    <textarea id="leadText" name="leadText" rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="publishedDate">Published Date</label>
+                                    <input type="datetime-local" id="publishedDate" name="publishedDate">
+                                </div>
+                                <div class="form-group">
+                                    <label for="homeSection">Home Section</label>
+                                    <input type="text" id="homeSection" name="homeSection">
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Queue Article
+                                </button>
+                                <button type="reset" class="btn btn-secondary">
+                                    <i class="fas fa-undo"></i>
+                                    Reset Form
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- File Upload Tab -->
+                <div id="uploadTab" class="tab-content">
+                    <div class="upload-container">
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-content">
+                                <div class="upload-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <h3>Drop JSON file here or click to browse</h3>
+                                <p>Only .json files are accepted (Max 10MB)</p>
+                                <input type="file" id="fileInput" accept=".json" hidden>
+                                <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                                    <i class="fas fa-folder-open"></i>
+                                    Choose File
+                                </button>
+                            </div>
+                        </div>
+                        <div id="uploadProgress" class="upload-progress hidden">
+                            <div class="progress-header">
+                                <h4>Processing file...</h4>
+                                <span class="progress-percent">0%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Activity Feed -->
+            <section class="activity-section" id="activity">
+                <div class="section-header">
+                    <h2><i class="fas fa-stream"></i> Real-time Activity</h2>
+                    <div class="header-actions">
+                        <button class="btn btn-secondary btn-sm" onclick="clearActivity()">
+                            <i class="fas fa-trash"></i>
+                            Clear
+                        </button>
+                    </div>
+                </div>
+                <div class="activity-container">
+                    <div class="activity-feed" id="activityFeed">
+                        <div class="activity-item info">
+                            <div class="activity-icon">
+                                <i class="fas fa-info-circle"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-header">
+                                    <h4>System Ready</h4>
+                                    <span class="activity-time">Just now</span>
+                                </div>
+                                <p>ArticleFlow Pro is ready to process articles</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Articles Table -->
+            <section class="articles-section" id="articles">
+                <div class="section-header">
+                    <h2><i class="fas fa-newspaper"></i> Recent Articles</h2>
+                    <div class="header-actions">
+                        <button class="btn btn-secondary btn-sm" onclick="refreshArticles()">
+                            <i class="fas fa-sync-alt"></i>
+                            Refresh
+                        </button>
+                        <button class="btn btn-primary btn-sm">
+                            <i class="fas fa-download"></i>
+                            Export
+                        </button>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="articles-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Type</th>
+                                <th>Processed At</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="articlesTableBody">
+                            <tr>
+                                <td colspan="6" class="no-data">
+                                    <div class="empty-state">
+                                        <i class="fas fa-inbox"></i>
+                                        <h3>No articles found</h3>
+                                        <p>Start by adding some articles to see them here</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination" id="pagination"></div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <h3>Processing...</h3>
+            <p>Please wait while we process your request</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="/js/common.js"></script>
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>

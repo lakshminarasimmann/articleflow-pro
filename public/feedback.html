@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback - ArticleFlow Pro</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/landing.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="/">
+                    <i class="fas fa-stream"></i>
+                    <span>ArticleFlow Pro</span>
+                </a>
+            </div>
+            <div class="nav-menu">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/about" class="nav-link">About</a>
+                <a href="/feedback" class="nav-link active">Feedback</a>
+                <a href="/developer" class="nav-link">Developer</a>
+                <a href="/dashboard" class="nav-link nav-cta">Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Feedback Section -->
+    <section class="feedback-section">
+        <div class="container">
+            <div class="feedback-header">
+                <h1>We Value Your Feedback</h1>
+                <p>Help us improve ArticleFlow Pro by sharing your thoughts and suggestions</p>
+            </div>
+            
+            <div class="feedback-container">
+                <div class="feedback-form-container">
+                    <form class="feedback-form" id="feedbackForm">
+                        <div class="form-group">
+                            <label for="feedbackName">Name</label>
+                            <input type="text" id="feedbackName" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="feedbackEmail">Email</label>
+                            <input type="email" id="feedbackEmail" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="feedbackType">Feedback Type</label>
+                            <select id="feedbackType" name="type" required>
+                                <option value="">Select feedback type</option>
+                                <option value="feature">Feature Request</option>
+                                <option value="bug">Bug Report</option>
+                                <option value="improvement">Improvement</option>
+                                <option value="general">General Feedback</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="feedbackRating">Overall Rating</label>
+                            <div class="rating-container">
+                                <div class="stars" id="starRating">
+                                    <i class="fas fa-star" data-rating="1"></i>
+                                    <i class="fas fa-star" data-rating="2"></i>
+                                    <i class="fas fa-star" data-rating="3"></i>
+                                    <i class="fas fa-star" data-rating="4"></i>
+                                    <i class="fas fa-star" data-rating="5"></i>
+                                </div>
+                                <span class="rating-text">Click to rate</span>
+                            </div>
+                            <input type="hidden" id="feedbackRating" name="rating" value="0">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="feedbackMessage">Your Message</label>
+                            <textarea id="feedbackMessage" name="message" rows="6" placeholder="Tell us what you think..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                            Send Feedback
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="feedback-info">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3>Feature Requests</h3>
+                        <p>Have an idea for a new feature? We'd love to hear about it!</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-bug"></i>
+                        </div>
+                        <h3>Bug Reports</h3>
+                        <p>Found a bug? Help us fix it by providing detailed information.</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3>General Feedback</h3>
+                        <p>Share your overall experience and suggestions for improvement.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="fas fa-stream"></i>
+                        <span>ArticleFlow Pro</span>
+                    </div>
+                    <p>Advanced article processing platform for modern applications</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ArticleFlow Pro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/common.js"></script>
+    <script>
+        // Star rating functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const stars = document.querySelectorAll('#starRating .fas');
+            const ratingInput = document.getElementById('feedbackRating');
+            const ratingText = document.querySelector('.rating-text');
+            
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = this.getAttribute('data-rating');
+                    ratingInput.value = rating;
+                    
+                    // Update star display
+                    stars.forEach((s, index) => {
+                        if (index < rating) {
+                            s.classList.add('active');
+                        } else {
+                            s.classList.remove('active');
+                        }
+                    });
+                    
+                    // Update rating text
+                    const ratingTexts = ['', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
+                    ratingText.textContent = ratingTexts[rating];
+                });
+                
+                star.addEventListener('mouseover', function() {
+                    const rating = this.getAttribute('data-rating');
+                    stars.forEach((s, index) => {
+                        if (index < rating) {
+                            s.classList.add('hover');
+                        } else {
+                            s.classList.remove('hover');
+                        }
+                    });
+                });
+            });
+            
+            document.getElementById('starRating').addEventListener('mouseleave', function() {
+                stars.forEach(s => s.classList.remove('hover'));
+            });
+            
+            // Form submission
+            document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Show success message
+                showToast('Thank you for your feedback! We appreciate your input.', 'success');
+                
+                // Reset form
+                this.reset();
+                ratingInput.value = '0';
+                stars.forEach(s => s.classList.remove('active'));
+                ratingText.textContent = 'Click to rate';
+            });
+        });
+        
+        function showToast(message, type) {
+            // Simple toast implementation
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<i class="fas fa-check-circle"></i><span>${message}</span>`;
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #48bb78;
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                z-index: 1000;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            `;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

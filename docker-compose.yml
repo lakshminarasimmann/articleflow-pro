@@ -9,6 +9,12 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    restart: unless-stopped
 
   mongodb:
     image: mongo:7.0
@@ -17,3 +23,9 @@ services:
       - "27017:27017"
     environment:
       MONGO_INITDB_DATABASE: articles_db
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/articles_db --quiet
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
